@@ -1,1 +1,5 @@
-config.toml
+dist
+node_modules
+*.db
+/public/cache
+.env.dev
