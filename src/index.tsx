@@ -1,22 +1,21 @@
 import { createRoot } from 'react-dom/client'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { ipcLink } from 'electron-trpc/renderer'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import App from './components/App'
-import { trpc } from './trpc'
+import { trpc } from './lib/trpc'
+import '@fontsource-variable/rubik'
+import './index.css'
+import { router } from './router'
+import { RouterProvider } from 'react-router-dom'
 
 function RenderRoot() {
 	const [queryClient] = useState(() => new QueryClient())
-	const [trpcClient] = useState(() =>
-		trpc.createClient({
-			links: [ipcLink()],
-		}),
-	)
+	const [trpcClient] = useState(() => trpc.createClient({ links: [ipcLink()] }))
 
 	return (
 		<trpc.Provider client={trpcClient} queryClient={queryClient}>
 			<QueryClientProvider client={queryClient}>
-				<App />
+				<RouterProvider router={router} />
 			</QueryClientProvider>
 		</trpc.Provider>
 	)

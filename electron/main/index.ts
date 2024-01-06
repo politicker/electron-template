@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from 'electron'
+import { app, BrowserWindow, nativeTheme } from 'electron'
 import { join } from 'node:path'
 import { prisma } from './prisma'
 import { createIPCHandler } from 'electron-trpc/main'
@@ -25,11 +25,13 @@ const preload = join(__dirname, '../preload/index.js')
 const url = process.env.VITE_DEV_SERVER_URL
 const indexHtml = join(process.env.DIST, 'index.html')
 
+nativeTheme.themeSource = 'dark'
+
 function createWindow() {
 	win = new BrowserWindow({
-		title: 'Budgeted',
-		height: 600,
-		width: 900,
+		title: 'Electron Template',
+		height: 1200,
+		width: 1400,
 		webPreferences: {
 			preload,
 			sandbox: false,
@@ -41,7 +43,7 @@ function createWindow() {
 		// electron-vite-vue#298
 		win.loadURL(url)
 		// Open devTool if the app is not packaged
-		win.webContents.openDevTools()
+		// win.webContents.openDevTools()
 	} else {
 		win.loadFile(indexHtml)
 	}
